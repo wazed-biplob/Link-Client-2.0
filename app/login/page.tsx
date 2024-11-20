@@ -9,22 +9,22 @@ const LoginPage = () => {
   });
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    fetch(`${process.env.NEXT_PUBLIC_URL}/auth/login`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // if (data?.success === true) {
-        //   setUserId(data?.data?._id);
-        //   dispatch(setImgURL(data?.data?.imgURL));
-        //   dispatch(setEmail(data?.data?.email));
-        //   router.push(`${data?.data?._id}`);
-        // }
-      });
+    // fetch(`${process.env.NEXT_PUBLIC_URL}/auth/login`, {
+    //   method: "POST",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(formData),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    // if (data?.success === true) {
+    //   setUserId(data?.data?._id);
+    //   dispatch(setImgURL(data?.data?.imgURL));
+    //   dispatch(setEmail(data?.data?.email));
+    //   router.push(`${data?.data?._id}`);
+    // }
+    // });
   };
   return (
     <>
