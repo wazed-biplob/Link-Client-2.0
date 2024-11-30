@@ -1,20 +1,21 @@
 "use client";
-import { useParams } from "next/navigation";
+import Image from "next/image";
 import { plainTime } from "../utils/TimeFormat";
+import { IPost } from "../interface/type";
 
-export const Post = ({ post, imgURL }: { post: any; imgURL: string }) => {
-  const param = useParams();
-
+export const Post = ({ post, imgURL }: { post: IPost; imgURL: string }) => {
   return (
     <>
       <div className="flex flex-col border p-6 rounded-lg shadow-md">
         <div className="flex items-center gap-x-2">
           <div>
             {imgURL && (
-              <img
+              <Image
                 alt="user-image"
+                height={40}
+                width={40}
                 src={imgURL}
-                className="object-cover w-[30px] h-[30px] border rounded-full shadow"
+                className="object-cover border rounded-full shadow"
               />
             )}
           </div>
@@ -37,9 +38,7 @@ export const Post = ({ post, imgURL }: { post: any; imgURL: string }) => {
             className="object-cover w-full mb-4 h-60 sm:h-96 dark:bg-gray-500"
           /> */}
           <h2 className="mb-1 text-xl font-semibold">{post?.postHeading}</h2>
-          <p className="text-sm dark:text-gray-600">
-            {post?.postContent?.slice(0, 100) + "..."}
-          </p>
+          <p className="text-sm dark:text-gray-600">{post?.postContent}</p>
         </div>
       </div>
     </>

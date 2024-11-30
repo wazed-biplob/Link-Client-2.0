@@ -1,14 +1,12 @@
 "use client";
 import Image from "next/image";
 import { FormEvent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { useDispatch } from "react-redux";
 import { setEmail, setImgURL, setUserId } from "../redux/userSlice";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const LoginPage = () => {
-  const [id, setId] = useState("");
-  const { imgURL, email } = useSelector((state: RootState) => state.user);
   const router = useRouter();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -27,11 +25,11 @@ const LoginPage = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data?.success === true) {
-          setId(data?.data?._id);
-          setUserId(data?.data._id);
+          const id = data?.data?._id;
+          dispatch(setUserId(data?.data?._id));
           dispatch(setImgURL(data?.data?.imgURL));
           dispatch(setEmail(data?.data?.email));
-          router.push(`${data?.data?._id}`);
+          router.push(`${id}`);
         }
       });
   };
@@ -74,12 +72,12 @@ const LoginPage = () => {
                   className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800"
                 />
 
-                <a
+                <Link
                   href="#"
                   className="text-xs mt-1 mb-3 text-right hover:underline text-gray-600"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
             </div>
             <div>
@@ -93,9 +91,12 @@ const LoginPage = () => {
               </div>
               <p className="px-6 mt-2 text-sm text-center text-gray-600">
                 Don&apos;t have an account yet?
-                <a href="/register" className="hover:underline text-violet-600">
+                <Link
+                  href="/register"
+                  className="hover:underline text-violet-600"
+                >
                   <span className="text-blue-700">&nbsp;Sign up</span>
-                </a>
+                </Link>
               </p>
             </div>
           </form>

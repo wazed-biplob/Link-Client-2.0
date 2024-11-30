@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { useNewPostMutation } from "../redux/baseApi";
 
 const Modal = ({
@@ -16,9 +16,9 @@ const Modal = ({
     postContent: "",
   });
   const [newPost] = useNewPostMutation();
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await newPost(postData);
+    await newPost(postData);
     setOpen(false);
   };
   return (
