@@ -15,7 +15,7 @@ const LoginPage = () => {
   });
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    fetch(`${process.env.NEXT_PUBLIC_URL}/auth/login`, {
+    fetch(`https://link-server-beta.vercel.app/api/v1/auth/login`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

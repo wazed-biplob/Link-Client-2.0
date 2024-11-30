@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 const UserProfile = () => {
   const { data } = useGetPostsQuery({});
   const imgURL = useSelector((state: RootState) => state.user.imgURL);
-  console.log(data?.data);
 
   return (
     <div className="flex flex-col justify-center items-center">
