@@ -1,8 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+export interface IUser {
+  imgURL: string;
+  email: string;
+  userId: string;
+}
+
+const initialState: IUser = {
   imgURL: "",
   email: "",
+  userId: "",
 };
 
 export const userSlice = createSlice({
@@ -15,9 +22,12 @@ export const userSlice = createSlice({
     setEmail: (state, action) => {
       state.email = action.payload;
     },
+    setUserId: (state, action) => {
+      state.userId = action.payload;
+    },
   },
 });
 
-export const { setImgURL, setEmail } = userSlice.actions;
+export const { setImgURL, setEmail, setUserId } = userSlice.actions;
 
 export default userSlice.reducer;

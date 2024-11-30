@@ -1,30 +1,39 @@
 "use client";
 import Image from "next/image";
 import { FormEvent, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { setEmail, setImgURL, setUserId } from "../redux/userSlice";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+  const [id, setId] = useState("");
+  const { imgURL, email } = useSelector((state: RootState) => state.user);
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "www.biplob@gmail.com",
     password: "123456",
   });
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // fetch(`${process.env.NEXT_PUBLIC_URL}/auth/login`, {
-    //   method: "POST",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(formData),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    // if (data?.success === true) {
-    //   setUserId(data?.data?._id);
-    //   dispatch(setImgURL(data?.data?.imgURL));
-    //   dispatch(setEmail(data?.data?.email));
-    //   router.push(`${data?.data?._id}`);
-    // }
-    // });
+    fetch(`${process.env.NEXT_PUBLIC_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.success === true) {
+          setId(data?.data?._id);
+          setUserId(data?.data._id);
+          dispatch(setImgURL(data?.data?.imgURL));
+          dispatch(setEmail(data?.data?.email));
+          router.push(`${data?.data?._id}`);
+        }
+      });
   };
   return (
     <>
