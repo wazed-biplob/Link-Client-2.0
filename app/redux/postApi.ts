@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// const API_URL = "https://link-server-beta.vercel.app/api/v1/";
-const API_URL = "http://localhost:5000/api/v1";
+const API_URL = "https://link-server-beta.vercel.app/api/v1/";
+// const API_URL = "http://localhost:5000/api/v1/";
 export const postApi = createApi({
   reducerPath: "postApi",
   baseQuery: fetchBaseQuery({
