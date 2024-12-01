@@ -10,7 +10,9 @@ import {
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from "./userSlice";
-import { baseApi } from "./baseApi";
+
+import { authApi } from "./authApi";
+import { postApi } from "./postApi";
 
 const persistUserReducer = persistReducer(
   {
@@ -23,14 +25,17 @@ const persistUserReducer = persistReducer(
 export const store = configureStore({
   reducer: {
     user: persistUserReducer,
-    [baseApi.reducerPath]: baseApi.reducer,
+    [postApi.reducerPath]: postApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(baseApi.middleware),
+    })
+      .concat(postApi.middleware)
+      .concat(authApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

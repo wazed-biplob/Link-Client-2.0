@@ -8,14 +8,14 @@ export const Post = ({ post, imgURL }: { post: IPost; imgURL: string }) => {
     <>
       <div className="flex flex-col border p-6 rounded-lg shadow-md">
         <div className="flex items-center gap-x-2">
-          <div>
+          <div className="w-10 h-10 relative z-[-1]">
             {imgURL && (
               <Image
                 alt="user-image"
-                height={40}
-                width={40}
                 src={imgURL}
-                className="object-cover border rounded-full shadow"
+                fill
+                className="rounded-full object-cover"
+                sizes="(max-width:40px), (max-width:40px)"
               />
             )}
           </div>
@@ -31,7 +31,7 @@ export const Post = ({ post, imgURL }: { post: IPost; imgURL: string }) => {
             <span className="text-xs">{plainTime(post?.createdAt)}</span>
           </div>
         </div>
-        <div>
+        <div className="mt-2">
           {/* <img
             src=""
             alt=""

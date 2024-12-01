@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from "react";
-import { useNewPostMutation } from "../redux/baseApi";
+import { useNewPostMutation } from "../redux/postApi";
 
 const Modal = ({
   open,
@@ -38,7 +38,7 @@ const Modal = ({
           role="dialog"
         >
           <form>
-            <div className="overflow-y-scroll px-4 border max-h-[50vh] py-2">
+            <div className="max-h-[50vh] py-2">
               {/* <img
                 src="https://source.unsplash.com/random/100x100/?5"
                 alt=""

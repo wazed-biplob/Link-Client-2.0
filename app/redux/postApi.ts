@@ -1,14 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export const baseApi = createApi({
-  reducerPath: "baseApi",
+// const API_URL = "https://link-server-beta.vercel.app/api/v1/";
+const API_URL = "http://localhost:5000/api/v1";
+export const postApi = createApi({
+  reducerPath: "postApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://link-server-beta.vercel.app/api/v1/",
+    baseUrl: API_URL,
   }),
   tagTypes: ["getPosts"],
   endpoints: (build) => ({
     getPosts: build.query({
-      query: () => "post/post-wall",
+      query: (userId) => `post/post-wall/${userId}`,
       providesTags: ["getPosts"],
     }),
     newPost: build.mutation({
@@ -36,4 +37,4 @@ export const {
   useGetPostsQuery,
   useNewPostMutation,
   usePostProfilePictureMutation,
-} = baseApi;
+} = postApi;
