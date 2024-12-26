@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Title
 
-## Getting Started
+This is a social platform to share thoughts, ideas and contents though interactive engagements.
 
-First, run the development server:
+## Acknowledgements
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [React Redux | RTK Query | Redux Persist]()
+- [React Icons](https://react-icons.github.io/react-icons/)
+- [Next.js 14]()
+- [Typescript]()
+- [Tailwind CSS]()
+
+## Appendix
+
+Any additional information goes here
+
+## Badges
+
+Add badges from somewhere like: [shields.io](https://shields.io/)
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
+
+## Installation
+
+To run this project :
+
+```
+  1. Clone the git repository to your local machine
+  2. run 'yarn install' or 'npm i'
+  3. run 'yarn dev'
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+[www.link.com](https://wb-link.vercel.app/login)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 About Me
 
-## Learn More
+I'm a junior MERN stack developer. Eager to stay updated with the tech world.
 
-To learn more about Next.js, take a look at the following resources:
+## 🔗 Links
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://katherineoelsner.com/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+**Client:** React, Redux, TailwindCSS
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Server:** Node, Express
