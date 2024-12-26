@@ -36,7 +36,7 @@ const LoginPage = () => {
   };
   return (
     <>
-      <div className="flex justify-center items-center h-[98vh]">
+      <div className="flex justify-center items-center border-lime-500 border-8 h-[100vh]">
         <div className="flex flex-col items-center max-w-md p-4 rounded-md sm:p-8 border bg-gray-50 text-gray-800">
           <div className="flex items-center">
             <Image src="/favicon.png" width={40} height={40} alt="Link Logo" />
@@ -85,15 +85,19 @@ const LoginPage = () => {
               <div>
                 <button
                   type="submit"
-                  disabled={isLoading}
-                  className="w-full border mt-2 px-8 py-3 font-semibold rounded-md bg-violet-600 text-gray-50 hover:bg-violet-700"
+                  disabled={isLoading || loginSuccess}
+                  className={`${
+                    isLoading || loginSuccess
+                      ? "bg-slate-500 cursor-not-allowed"
+                      : "bg-violet-600 hover:bg-violet-700"
+                  } w-full border mt-2 px-8 py-3 font-semibold rounded-md  text-gray-50 `}
                 >
-                  Log in
+                  {!(isLoading || loginSuccess) && <span>Log in</span>}
                   {isLoading && !loginSuccess && (
-                    <span className="text-[8px]">&nbsp;...Loading</span>
+                    <span className="text-[16px]">&nbsp;...Loading</span>
                   )}
                   {loginSuccess && (
-                    <span className="text-[8px]">&nbsp;...Redirecting</span>
+                    <span className="text-[16px]">&nbsp;...Redirecting</span>
                   )}
                 </button>
               </div>
@@ -103,8 +107,7 @@ const LoginPage = () => {
                   href="/register"
                   className="hover:underline text-violet-600"
                 >
-                  <span className="text-blue-700">&nbsp;Sign up</span>
-                  <span>{isLoading ? "...Loading" : ""}</span>
+               
                 </Link>
               </p> */}
             </div>

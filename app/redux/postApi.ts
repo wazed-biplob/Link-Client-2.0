@@ -21,12 +21,16 @@ export const postApi = createApi({
       }),
       invalidatesTags: ["getPosts"],
     }),
-    postProfilePicture: build.mutation({
-      query: (userData) => ({
-        url: "user/post-profile-picture",
-        method: "PATCH",
+    getPost: build.query({
+      query: (postId) => `post/get-post/${postId}`,
+    }),
+
+    updatePost: build.mutation({
+      query: ({ postId, postData }) => ({
+        url: `post/update-post/${postId}`,
+        method: "POST",
         contentType: "application/json",
-        body: userData,
+        body: postData,
       }),
       invalidatesTags: ["getPosts"],
     }),
@@ -36,5 +40,7 @@ export const postApi = createApi({
 export const {
   useGetPostsQuery,
   useNewPostMutation,
-  usePostProfilePictureMutation,
+  useLazyGetPostsQuery,
+  useGetPostQuery,
+  useUpdatePostMutation,
 } = postApi;

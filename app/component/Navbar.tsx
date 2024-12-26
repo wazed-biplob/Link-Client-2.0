@@ -29,7 +29,7 @@ export const Navbar = () => {
             />
           )}
         </div>
-        <Modal open={open} setOpen={setOpen} _id={userId} />
+        <Modal open={open} setOpen={setOpen} _id={userId} postId="" />
       </div>
     </>
   );

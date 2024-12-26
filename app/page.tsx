@@ -10,9 +10,5 @@ export default function Home() {
     router.push("/login");
   }, [router]);
 
-  return (
-    <>
-      <div className="border w-10 h-10"></div>
-    </>
-  );
+  return <></>;
 }

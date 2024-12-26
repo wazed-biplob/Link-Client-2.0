@@ -1,26 +1,83 @@
 import React, { FormEvent, useState } from "react";
-import { useNewPostMutation } from "../redux/postApi";
+import {
+  useGetPostQuery,
+  useNewPostMutation,
+  useUpdatePostMutation,
+} from "../redux/postApi";
 
 const Modal = ({
   open,
   setOpen,
   _id,
+  postId,
 }: {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   _id: string;
+  postId: string;
 }) => {
   const [postData, setPostData] = useState({
     userId: _id,
     postHeading: "",
     postContent: "",
+    postPicture: "",
   });
-  const [newPost] = useNewPostMutation();
+
+  const [image, setImage] = useState<File | null>(null);
+
+  const [newPost, { isLoading }] = useNewPostMutation();
+  const [updatePost] = useUpdatePostMutation();
+
+  const {
+    data: { data },
+  } = useGetPostQuery(postId, {
+    skip: postId === "",
+  });
+
+  // publish new post
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    // if image exists then upload it to cloudinary
+    if (image) {
+      const formData = new FormData();
+      formData.append("file", image);
+      formData.append("upload_preset", "link_cloudinary");
+      formData.append("folder", "post_pictures");
+      try {
+        const res = await fetch(
+          "https://api.cloudinary.com/v1_1/dsbgpj3iu/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const data = await res.json();
+
+        if (res.ok) {
+          setPostData({ ...postData, postPicture: data?.secure_url });
+        } else {
+          console.log(data.error?.message || "Upload failed");
+        }
+      } catch (err) {
+        console.log("Error uploading image. Error : " + err);
+      } finally {
+        console.log("Image has been uploaded");
+      }
+    }
     await newPost(postData);
+
     setOpen(false);
   };
+
+  // update post
+  const handleUpdate = async (e: FormEvent) => {
+    e.preventDefault();
+    await updatePost({ postId, postData });
+    setOpen(false);
+  };
+
   return (
     <div
       className={`fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-500 ease-in-out ${
@@ -39,13 +96,18 @@ const Modal = ({
         >
           <form>
             <div className="max-h-[50vh] py-2">
-              {/* <img
-                src="https://source.unsplash.com/random/100x100/?5"
-                alt=""
-                className="object-cover w-full mb-4 h-60 sm:h-96 dark:bg-gray-500"
-              /> */}
+              {!data?.postPicture && (
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setImage(e.target.files?.[0] || null)
+                  }
+                />
+              )}
+
               <input
-                placeholder="Heading"
+                placeholder={data?.postHeading ? data?.postHeading : "Heading"}
                 onChange={(e) =>
                   setPostData({ ...postData, postHeading: e.target.value })
                 }
@@ -53,7 +115,7 @@ const Modal = ({
               />
 
               <textarea
-                placeholder="Text"
+                placeholder={data?.postContent ? data?.postContent : "Content"}
                 onChange={(e) =>
                   setPostData({ ...postData, postContent: e.target.value })
                 }
@@ -71,10 +133,10 @@ const Modal = ({
               </button>
 
               <button
-                onClick={(e) => handleSubmit(e)}
+                onClick={(e) => (postId ? handleUpdate(e) : handleSubmit(e))}
                 className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
               >
-                Post
+                {isLoading ? "...loading" : postId ? "Update" : "Post"}
               </button>
             </div>
           </form>
