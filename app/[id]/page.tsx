@@ -20,7 +20,7 @@ const UserProfile = () => {
             <Post key={post?._id} post={post} imgURL={imgURL} />
           ))
         ) : (
-          <span>No Post Here. Create a new post.</span>
+          <span>No Posts</span>
         )}
       </div>
     </div>

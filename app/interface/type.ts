@@ -21,9 +21,3 @@ export interface User {
   updatedAt: string;
   __v: number;
 }
-
-// export interface UserLoginAuth {
-//   success: boolean;
-//   message: string;
-//   data: User;
-// }

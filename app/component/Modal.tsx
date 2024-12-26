@@ -28,9 +28,7 @@ const Modal = ({
   const [newPost, { isLoading }] = useNewPostMutation();
   const [updatePost] = useUpdatePostMutation();
 
-  const {
-    data: { data },
-  } = useGetPostQuery(postId, {
+  const { data: { data } = {} } = useGetPostQuery(postId, {
     skip: postId === "",
   });
 
@@ -58,7 +56,7 @@ const Modal = ({
         if (res.ok) {
           setPostData({ ...postData, postPicture: data?.secure_url });
         } else {
-          console.log(data.error?.message || "Upload failed");
+          console.log(data?.error?.message || "Upload failed");
         }
       } catch (err) {
         console.log("Error uploading image. Error : " + err);
