@@ -7,8 +7,11 @@ import { useRouter } from "next/navigation";
 // import Link from "next/link";
 import { useLoginMutation } from "../redux/authApi";
 import { IUserLogin } from "../interface/type";
+import { API_URL } from "../utils/vars";
 
 const LoginPage = () => {
+  const [dbStatus, setDbStatus] = useState("Checking...");
+
   const router = useRouter();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState<IUserLogin>({
@@ -17,12 +20,35 @@ const LoginPage = () => {
   });
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [fetchFormData, { isLoading, data }] = useLoginMutation();
+  // database connection check
+  useEffect(() => {
+    let interval: any;
+    let data: any;
+    const fetchDbStatus = async () => {
+      try {
+        const res = await fetch(`${API_URL}db/db-status`);
+        data = await res.json();
+        setDbStatus(data?.message);
+        if (data?.status === "success") {
+          clearInterval(interval);
+        }
+      } catch (error) {
+        setDbStatus("Error Connecting Database");
+      }
+    };
 
+    interval = setInterval(fetchDbStatus, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+  // check whether user + post data has been retrieved
   useEffect(() => {
     if (data) {
       setLoginSuccess(true);
     }
   }, [data]);
+
+  // login handler
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const res = await fetchFormData(formData);
@@ -34,6 +60,7 @@ const LoginPage = () => {
       router.push(`${id}`);
     }
   };
+
   return (
     <>
       <div className="flex justify-center items-center border-lime-500 border-8 h-[100vh]">
@@ -112,6 +139,11 @@ const LoginPage = () => {
               </p> */}
             </div>
           </form>
+          {
+            <span className="text-[16px] mt-2 border rounded-sm px-2">
+              {dbStatus}
+            </span>
+          }
         </div>
       </div>
     </>
