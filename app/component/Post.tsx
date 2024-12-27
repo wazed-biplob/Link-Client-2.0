@@ -57,14 +57,14 @@ export const Post = ({ post, imgURL }: { post: IPost; imgURL: string }) => {
             <p className="text-sm dark:text-gray-600">{post?.postContent}</p>
           </div>
           <div className="flex items-center gap-x-2 mt-2">
-            <AiFillLike size={16} color="blue" />
+            <AiFillLike size={18} color="blue" />
 
-            <p className="text-[10px]">Comment</p>
-            <button onClick={() => setOpen(true)} className="text-[10px]">
+            <p className="text-[16px]">Comment</p>
+            <button onClick={() => setOpen(true)} className="text-[16px]">
               Edit
             </button>
             <span>
-              <IoMdTrash size={16} color="black" />
+              <IoMdTrash size={18} color="black" />
             </span>
           </div>
         </div>

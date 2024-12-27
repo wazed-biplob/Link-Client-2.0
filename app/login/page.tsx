@@ -20,27 +20,27 @@ const LoginPage = () => {
   });
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [fetchFormData, { isLoading, data }] = useLoginMutation();
+
   // database connection check
   useEffect(() => {
-    let interval: any;
-    let data: any;
     const fetchDbStatus = async () => {
       try {
         const res = await fetch(`${API_URL}db/db-status`);
-        data = await res.json();
+        const data = await res.json();
         setDbStatus(data?.message);
         if (data?.status === "success") {
           clearInterval(interval);
         }
-      } catch (error) {
-        setDbStatus("Error Connecting Database");
+      } catch (err) {
+        setDbStatus("Error Connecting Database. Error : " + err);
       }
     };
 
-    interval = setInterval(fetchDbStatus, 1000);
+    const interval = setInterval(fetchDbStatus, 1000);
 
     return () => clearInterval(interval);
   }, []);
+
   // check whether user + post data has been retrieved
   useEffect(() => {
     if (data) {

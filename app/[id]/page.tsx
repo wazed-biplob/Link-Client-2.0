@@ -6,7 +6,6 @@ import { IPost } from "../interface/type";
 import { useGetPostsQuery } from "../redux/postApi";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
-import { API_URL } from "../utils/vars";
 
 const UserProfile = () => {
   const { userId } = useSelector((state: RootState) => state.user);
