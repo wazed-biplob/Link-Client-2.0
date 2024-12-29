@@ -24,7 +24,6 @@ const Modal = ({
   });
 
   const [image, setImage] = useState<File | null>(null);
-
   const [newPost, { isLoading }] = useNewPostMutation();
   const [updatePost] = useUpdatePostMutation();
 
@@ -35,6 +34,8 @@ const Modal = ({
   // publish new post
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    let updatedPostData = { ...postData }; // local copy of postData
 
     // if image exists then upload it to cloudinary
     if (image) {
@@ -54,7 +55,10 @@ const Modal = ({
         const data = await res.json();
 
         if (res.ok) {
-          setPostData({ ...postData, postPicture: data?.secure_url });
+          updatedPostData = {
+            ...updatedPostData,
+            postPicture: data?.secure_url,
+          };
         } else {
           console.log(data?.error?.message || "Upload failed");
         }
@@ -64,8 +68,8 @@ const Modal = ({
         console.log("Image has been uploaded");
       }
     }
-    await newPost(postData);
-
+    await newPost(updatedPostData);
+    setPostData({ ...postData, postPicture: "" });
     setOpen(false);
   };
 
@@ -134,7 +138,7 @@ const Modal = ({
                 onClick={(e) => (postId ? handleUpdate(e) : handleSubmit(e))}
                 className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
               >
-                {isLoading ? "...loading" : postId ? "Update" : "Post"}
+                {isLoading ? "Processng..." : postId ? "Update" : "Post"}
               </button>
             </div>
           </form>

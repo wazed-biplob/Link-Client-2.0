@@ -11,9 +11,7 @@ import { API_URL } from "../utils/vars";
 
 const LoginPage = () => {
   const [dbStatus, setDbStatus] = useState<string>("Checking...");
-  const [dbConnection, setDbConnection] = useState<boolean>(false);
   const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
-  console.log(dbConnection);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -33,12 +31,10 @@ const LoginPage = () => {
         setDbStatus(data?.message);
         if (data?.status === "success") {
           clearInterval(interval);
-          setDbConnection(true);
         }
       } catch (err) {
         setDbStatus("Error : " + err);
         clearInterval(interval);
-        setDbConnection(false);
       }
     };
 
