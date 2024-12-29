@@ -19,10 +19,7 @@ export const Post = ({ post, imgURL }: { post: IPost; imgURL: string }) => {
   // delete post
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this post?")) {
-      const res = await deletePost(post?._id);
-      if (res?.data?.success === true) {
-        alert("Post deleted successfully");
-      }
+      await deletePost(post?._id);
     }
   };
 
@@ -38,6 +35,7 @@ export const Post = ({ post, imgURL }: { post: IPost; imgURL: string }) => {
                 fill
                 className="rounded-full object-cover"
                 sizes="(max-width:40px), (max-width:40px)"
+                priority={true}
               />
             )}
           </div>
@@ -62,6 +60,7 @@ export const Post = ({ post, imgURL }: { post: IPost; imgURL: string }) => {
                 fill
                 className="object-cover rounded-md"
                 sizes="(max-width:400px), (max-width:400px)"
+                priority={true}
               />
             </div>
           )}

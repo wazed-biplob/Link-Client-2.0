@@ -13,6 +13,7 @@ import userReducer from "./userSlice";
 
 import { authApi } from "./authApi";
 import { postApi } from "./postApi";
+import { utilsApi } from "./utilsApi";
 
 const persistUserReducer = persistReducer(
   {
@@ -27,6 +28,7 @@ export const store = configureStore({
     user: persistUserReducer,
     [postApi.reducerPath]: postApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
+    [utilsApi.reducerPath]: utilsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -35,7 +37,8 @@ export const store = configureStore({
       },
     })
       .concat(postApi.middleware)
-      .concat(authApi.middleware),
+      .concat(authApi.middleware)
+      .concat(utilsApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -36,6 +36,7 @@ export const Navbar = () => {
               fill
               className="rounded-full object-cover"
               sizes="(max-width:40px), (max-width:40px)"
+              priority={true}
             />
           )}
         </div>

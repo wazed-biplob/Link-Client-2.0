@@ -4,6 +4,7 @@ import {
   useNewPostMutation,
   useUpdatePostMutation,
 } from "../redux/postApi";
+import { usePostPictureToCloudinaryMutation } from "../redux/utilsApi";
 
 const Modal = ({
   open,
@@ -26,6 +27,8 @@ const Modal = ({
   const [image, setImage] = useState<File | null>(null);
   const [newPost, { isLoading }] = useNewPostMutation();
   const [updatePost] = useUpdatePostMutation();
+  const [uploadImage, { isLoading: isUploadLoading }] =
+    usePostPictureToCloudinaryMutation();
 
   const { data: { data } = {} } = useGetPostQuery(postId, {
     skip: postId === "",
@@ -34,42 +37,22 @@ const Modal = ({
   // publish new post
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    let updatedPostData = { ...postData };
 
-    let updatedPostData = { ...postData }; // local copy of postData
-
-    // if image exists then upload it to cloudinary
     if (image) {
       const formData = new FormData();
       formData.append("file", image);
       formData.append("upload_preset", "link_cloudinary");
       formData.append("folder", "post_pictures");
+
       try {
-        const res = await fetch(
-          "https://api.cloudinary.com/v1_1/dsbgpj3iu/image/upload",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        const data = await res.json();
-
-        if (res.ok) {
-          updatedPostData = {
-            ...updatedPostData,
-            postPicture: data?.secure_url,
-          };
-        } else {
-          console.log(data?.error?.message || "Upload failed");
-        }
+        const res = await uploadImage(formData).unwrap();
+        updatedPostData = { ...postData, postPicture: res?.secure_url };
       } catch (err) {
-        console.log("Error uploading image. Error : " + err);
-      } finally {
-        console.log("Image has been uploaded");
+        console.error("Error uploading image:", err);
       }
     }
     await newPost(updatedPostData);
-    setPostData({ ...postData, postPicture: "" });
     setOpen(false);
   };
 
@@ -138,7 +121,11 @@ const Modal = ({
                 onClick={(e) => (postId ? handleUpdate(e) : handleSubmit(e))}
                 className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
               >
-                {isLoading ? "Processng..." : postId ? "Update" : "Post"}
+                {isLoading || isUploadLoading
+                  ? "Processng..."
+                  : postId
+                  ? "Update"
+                  : "Post"}
               </button>
             </div>
           </form>
